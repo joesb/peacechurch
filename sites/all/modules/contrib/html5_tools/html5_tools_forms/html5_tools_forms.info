@@ -1,0 +1,14 @@
+; $Id: html5_tools_forms.info,v 1.4 2011/01/21 05:05:53 ericduran Exp $
+name = HTML5 Forms Tools
+description = Overwrites Drupal's default forms with their HTML5 counter parts.
+core = 7.x
+package = 'Markup'
+dependencies[] = elements
+files[] = html5_tools_forms.module
+
+; Information added by drupal.org packaging script on January 1, 1970 - 00:00
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "html5_tools"
+datestamp = "1295612331"
+

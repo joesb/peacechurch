@@ -1,0 +1,8 @@
+; $Id: html5_helper.info $
+name = HTML5 Helper
+description = Improves HTML5 compliance.
+core = 7.x
+php = 5
+package = 'Markup'
+dependencies[] = elements
+dependencies[] = field

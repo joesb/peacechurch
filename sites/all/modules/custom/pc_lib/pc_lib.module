@@ -1,0 +1,59 @@
+<?php
+// $Id: pc_lib.module,v 0.1 $
+
+/**
+ * @file
+ *
+ * Peace Church Library
+ *
+ * Library of tools for the Peace Church site.
+ */
+
+/**
+ * Implementation of hook_block_info().
+ */
+function pc_lib_block_info () {
+  $blocks['site_mission'] = array(
+    'info' => t('Lib: Site Mission'),
+  );
+  
+  return $blocks;
+}
+
+/**
+ * Implementation of hook_block_view().
+ */
+function pc_lib_block_view($delta) {
+  $block = array();
+  
+  switch ($block) {
+    case 'site_mission':
+      $block['subject'] = '';
+      $block['content'] = variable_get('pc_lib_mission', '');
+      break;
+  }
+  
+  return $block;
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function pc_lib_menu() {
+  $items['admin/settings/pc-lib'] = array(
+    'title' => 'Peace Church Settings',
+  );
+  
+  return $items;
+}
+
+/**
+ * Implementation of hook_form_alter().
+ */
+function pc_lib_form_alter(&$form, &$form_state, $form_id) {
+  dprint_r($form_id);
+  switch ($form_id) {
+    case '':
+      break;
+  }
+}

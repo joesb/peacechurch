@@ -1,0 +1,68 @@
+<?php
+// $Id: html5_tools.module,v 1.7.2.1 2011/01/21 05:20:20 ericduran Exp $
+
+/**
+ * Implements hook_field_widget_info().
+ */
+function html5_tools_field_widget_info() {
+  return array(
+    'numberfield' => array(
+      'label' => t('Number field'),
+      'field types' => array('number_integer', 'number_decimal', 'number_float'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_form().
+ */
+function html5_tools_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  $value = isset($items[$delta]['value']) ? $items[$delta]['value'] : '';
+  // Substitute the decimal separator.
+  if ($field['type'] == 'number_decimal' || $field['type'] == 'number_float') {
+    $value = strtr($value, '.', $field['settings']['decimal_separator']);
+  }
+
+  $element += array(
+    '#type' => 'numberfield',
+    '#default_value' => $value,
+    // Allow a slightly larger size that the field length to allow for some
+    // configurations where all characters won't fit in input field.
+    '#size' => $field['type'] == 'number_decimal' ? $field['settings']['precision'] + 4 : 12,
+    // Allow two extra characters for signed values and decimal separator.
+    '#maxlength' => $field['type'] == 'number_decimal' ? $field['settings']['precision'] + 2 : 10,
+    // Extract the number type from the field type name for easier validation.
+    '#number_type' => str_replace('number_', '', $field['type']),
+  );
+
+  // Add #max.
+  if (!empty($instance['settings']['max'])) {
+    $element['#max'] = $instance['settings']['max'];
+  }
+  // Add #min.
+  if (!empty($instance['settings']['min'])) {
+    $element['#min'] = $instance['settings']['min'];
+  }
+
+  // Add prefix and suffix.
+  if (!empty($instance['settings']['prefix'])) {
+    $prefixes = explode('|', $instance['settings']['prefix']);
+    $element['#field_prefix'] = field_filter_xss(array_pop($prefixes));
+  }
+  if (!empty($instance['settings']['suffix'])) {
+    $suffixes = explode('|', $instance['settings']['suffix']);
+    $element['#field_suffix'] = field_filter_xss(array_pop($suffixes));
+  }
+
+  // We'll leave the validate to the number_field_widget since it'll validate our form.
+  $element['#element_validate'][] = 'number_field_widget_validate';
+
+  return array('value' => $element);
+}
+
+/**
+ * Implements hook_field_widget_error().
+ */
+function html5_tools_field_widget_error($element, $error, $form, &$form_state) {
+  form_error($element['value'], $error['message']);
+}

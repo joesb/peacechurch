@@ -1,0 +1,25 @@
+<?php 
+// $Id: html5_helper.module,v 0.1 $
+
+/**
+ * @file
+ *
+ * Helper tools for better HTML5 compliance.
+ */
+ 
+function html5_helper_html_head_alter(&$head_elements) {
+  // Correct the <meta> for charset for HTML5 compliance.
+  if (isset($head_elements['system_meta_content_type'])) {
+    $head_elements['system_meta_content_type']['#attributes'] = array('charset' => 'UTF-8');
+  }
+  //Add viewport
+  $head_elements['viewport'] = array(
+    '#type' => 'html_tag',
+    '#tag' => 'meta',
+    '#attributes' => array(
+      'name' => 'viewport',
+      'content' => 'width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;',
+    ),
+  );
+}
+ 

@@ -1,0 +1,7 @@
+; $Id: pc_lib.info $
+name = Peace Church Library
+description = Library of tools for the Peace Church site.
+core = 7.x
+php = 5
+package = 'Peace Church'
+

@@ -1,0 +1,7 @@
+<?php
+// $Id: html5_tools.install,v 1.3 2011/01/21 05:05:53 ericduran Exp $
+
+/**
+ * @file
+ * Install file for the htm5_tools module.
+ */
